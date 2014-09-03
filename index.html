@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--HTML5 doctype-->
+<html>
+
+<head>
+
+    <title>App Framework Kitchen Sink</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" type="text/css" href="css/icons.css" />    
+    <link rel="stylesheet" type="text/css" href="css/main.css"  />
+    <link rel="stylesheet" type="text/css" href="css/appframework.css"  />
+    <link rel="stylesheet" type="text/css" href="css/lists.css"  />
+    <link rel="stylesheet" type="text/css" href="css/forms.css"  />
+    <link rel="stylesheet" type="text/css" href="css/buttons.css"  />        
+    <link rel="stylesheet" type="text/css" href="css/badges.css"  />        
+    <link rel="stylesheet" type="text/css" href="css/grid.css"  />
+    <link rel="stylesheet" type="text/css" href="css/android.css"  />
+    <link rel="stylesheet" type="text/css" href="css/ios7.css"  />
+    <link rel="stylesheet" type="text/css" href="plugins/css/af.actionsheet.css"  />
+    <link rel="stylesheet" type="text/css" href="plugins/css/af.popup.css"  />
+    <link rel="stylesheet" type="text/css" href="plugins/css/af.scroller.css"  />
+    <link rel="stylesheet" type="text/css" href="plugins/css/af.selectBox.css"  />        
+
+    <script type="text/javascript" charset="utf-8" src="./js/appframework.js"></script>
+
+    <!-- include af.desktopBrowsers.js on desktop browsers only -->
+    <script>
+        function loadedPanel(what) {
+                //We are going to set the badge as the number of li elements inside the target
+                //$.ui.updateBadge("#aflink", $("#af").find("li").length);
+        }
+
+        function unloadedPanel(what) {
+            console.log("unloaded " + what.id);
+        }
+
+        if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
+            var script = document.createElement("script");
+            script.src = "plugins/af.desktopBrowsers.js";
+            var tag = $("head").append(script);
+            //$.os.desktop=true;
+        }
+
+        //  $.feat.nativeTouchScroll=true;          
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.actionsheet.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.css3animate.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.passwordBox.js"></script>          
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.scroller.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.selectBox.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.touchEvents.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.touchLayer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.popup.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/appframework.ui.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/transitions/fade.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/transitions/flip.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/transitions/pop.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/transitions/slide.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideDown.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideUp.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./plugins/af.slidemenu.js"></script>
+
+    <script type="text/javascript">
+
+        //$.ui.animateHeaders=false;
+        var search=document.location.search.toLowerCase().replace("?","");
+
+        //if(!search)
+        $.ui.useOSThemes=true;
+        
+        if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
+        {
+            $.ui.useOSThemes=true;
+
+            $.ui.ready(function(){
+                $("#afui").get(0).className=search;
+            });
+        }
+
+        var webRoot = "./";
+        // $.os.android=true;
+        //$.ui.autoLaunch = false;
+        $.ui.openLinksNewTab = false;
+        $.ui.splitview=false;
+        
+        $(document).ready(function(){
+              // $.ui.launch();
+
+        });
+
+        function showHide(obj, objToHide) {
+            var el = $("#" + objToHide)[0];
+
+            if (obj.className == "expanded") {
+                obj.className = "collapsed";
+            } else {
+                obj.className = "expanded";
+            }
+            $(el).toggle();
+        }
+
+        if($.os.android||$.os.ie||search=="android"){
+            $.ui.ready(function(){
+                $("#main .list").append("<li><a id='toggleAndroidTheme'>Toggle Theme Color</a></li>");
+                var $el=$("#afui");
+                $("#toggleAndroidTheme").bind("click",function(e){
+                    if($el.hasClass("light"))
+                        $el.removeClass("light");
+                    else
+                        $el.addClass("light");
+                });
+            });
+        }                        
+    </script>
+
+    </head>
+
+    <body>
+
+        <div id="afui">
+
+            <div id="header">
+
+            </div>
+
+            <div id="content">
+                <div id="welcome" data-title="Welcome" data-tab="welcome_tab" class="panel" selected="true">Welcome Page</div>
+                <div id="about" data-title="About" data-tab="about_tab" class="panel" >About Page</div>
+                <div id="settings" data-title="Settings" data-tab="settings_tab" class="panel" >Settings Page</div>
+            </div>
+
+            <div id="navbar">
+                <a href="#welcome" id="welcome_tab" class="icon home">Home</a>
+                <a href="#about" id="about_tab" class="icon tag">About</a>
+                <a href="#settings" id="settings_tab" class="icon tools">Settings</a>
+            </div>
+
+            <nav>
+                <ul class="list">
+                    <li><a href="#settings">Settings</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </body>
+
+</html>
